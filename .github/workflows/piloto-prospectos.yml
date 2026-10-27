@@ -1,0 +1,44 @@
+name: Generar muestra piloto de prospectos Ecuador
+
+on:
+  workflow_dispatch:
+    inputs:
+      cantidad:
+        description: "Cantidad de empresas candidatas (30–50 recomendado)"
+        required: true
+        default: "50"
+        type: choice
+        options:
+          - "30"
+          - "40"
+          - "50"
+
+permissions:
+  contents: read
+
+jobs:
+  generar-muestra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generar CSV desde fuente pública
+        env:
+          PROSPECTA_LIMIT: ${{ inputs.cantidad }}
+          PROSPECTA_OUTPUT: prospectos_piloto.csv
+        run: python scripts/generar_muestra_scvs.py
+
+      - name: Guardar CSV para descargar
+        uses: actions/upload-artifact@v4
+        with:
+          name: adsgency-prospecta-piloto
+          path: prospectos_piloto.csv
+          if-no-files-found: error
+          retention-days: 7
