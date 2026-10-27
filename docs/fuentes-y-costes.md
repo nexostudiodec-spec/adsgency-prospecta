@@ -10,6 +10,28 @@ No asumir que una fuente pública es gratuita para uso comercial ni que cubre to
 
 ## Fuentes evaluadas
 
+### Directorio de Compañías — Superintendencia de Compañías (SCVS)
+
+- La consulta pública del directorio indica más de 229.000 filas y una actualización registrada el 26/10/2026; ofrece descarga en Excel de aproximadamente 35 MB.
+- Incluye campos útiles para filtrar empresas por provincia, cantón, actividad económica, estado legal y datos de contacto empresariales disponibles.
+- No proporciona necesariamente página web, redes sociales ni correo comercial, por lo que debe funcionar como fuente de candidatos, no como lista de prospectos ya cualificados.
+- Antes de descargar y reutilizar en un flujo automatizado, comprobar las condiciones de uso/licencia de la fuente actual y evitar guardar la base completa en el repositorio. Descargar solo en una ejecución controlada y procesar los resultados localmente dentro del runner.
+- Decisión: es la mejor fuente inicial identificada para construir una muestra nacional; primero validar el mecanismo de descarga y condiciones de reutilización.
+
+Fuentes:
+- https://mercadodevalores.supercias.gob.ec/reportes/directorioCompanias.jsf
+- https://www.datosabiertos.gob.ec/dataset/directorio-de-companias (conjunto abierto, metadatos de 2021; no confundir con el directorio dinámico actualizado)
+
+### SRI — Datos abiertos del RUC
+
+- El SRI y el portal nacional de datos abiertos publican conjuntos de datos de contribuyentes por provincia, algunos en CSV/XLSX.
+- Puede complementar la cobertura por actividad y ubicación, pero debe revisarse la fecha de cada conjunto, la licencia y los campos incluidos.
+- Decisión: fuente complementaria; no consultar en masa el formulario interactivo del SRI ni automatizarlo sin autorización y condiciones claras.
+
+Fuentes:
+- https://www.sri.gob.ec/datos-abiertos
+- https://datosabiertos.gob.ec/dataset/registro-unico-de-contribuyentes-ruc-guayas
+
 ### OpenStreetMap / Overpass API pública
 
 - Ventaja: acceso sin clave y datos de negocios etiquetados en el mapa.
@@ -39,20 +61,15 @@ Referencias:
 - https://docs.github.com/en/actions/concepts/billing-and-usage
 - https://docs.github.com/en/billing/concepts/product-billing/github-actions
 
-### Fuentes públicas oficiales y directorios abiertos
-
-- Ventaja: pueden aportar nombres, actividad y ubicación sin comprar una base de contactos.
-- Limitaciones: suelen carecer de sitios web, correos de contacto y señales comerciales recientes; cada portal tiene condiciones propias.
-- Decisión: evaluar fuente por fuente y conservar URL y fecha de consulta. No automatizar formularios ni eludir medidas de acceso.
-
 ## Arquitectura recomendada para el piloto de coste cero
 
 1. No usar el motor autónomo completo de Harvey; no iniciar el ciclo autónomo.
-2. Recibir una lista inicial de resultados de fuentes públicas verificadas.
-3. Normalizar y deduplicar nombres, dominios, ciudad y URL de origen.
-4. Visitar solo sitios públicos de forma limitada para detectar presencia web y señales técnicas sencillas.
-5. Clasificar oportunidades con reglas transparentes, sin afirmar que una empresa necesita un servicio si no hay evidencia.
-6. Exportar CSV y revisar manualmente antes de cualquier contacto.
+2. Usar el directorio oficial como fuente de candidatos únicamente después de validar descarga y reutilización.
+3. Filtrar empresas activas por actividad económica y distribución territorial para obtener una muestra inicial.
+4. Investigar presencia web y señales comerciales solo en los candidatos seleccionados, con solicitudes limitadas y respeto a las condiciones de cada sitio.
+5. Normalizar y deduplicar nombres, dominios, ciudad y URL de origen.
+6. Clasificar oportunidades con reglas transparentes, sin afirmar que una empresa necesita un servicio si no hay evidencia.
+7. Exportar CSV y revisar manualmente antes de cualquier contacto.
 
 ## Campos mínimos del CSV
 
@@ -85,4 +102,4 @@ No crear una ejecución automática recurrente hasta que:
 
 ## Estado
 
-Evaluación documental completada. No se han ejecutado búsquedas de empresas ni workflows; no se han conectado APIs ni activado servicios de pago.
+Evaluación documental actualizada. No se han ejecutado búsquedas de empresas ni workflows; no se han conectado APIs ni activado servicios de pago.
