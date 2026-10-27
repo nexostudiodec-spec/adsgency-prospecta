@@ -7,6 +7,8 @@ import hashlib
 import io
 import os
 import sys
+import subprocess
+import tempfile
 import urllib.request
 from datetime import datetime, timezone
 
@@ -16,6 +18,31 @@ OUTPUT = os.environ.get("PROSPECTA_OUTPUT", "prospectos_piloto.csv")
 USER_AGENT = "AdsgencyProspectaPilot/1.0 (manual public-data sampling)"
 
 def fetch(url):
+    # La web de la SCVS puede rechazar la negociación TLS de urllib en runners
+    # de GitHub. Primero intentamos curl con HTTP/1.1 y TLS 1.2; después,
+    # como alternativa, usamos la biblioteca estándar de Python.
+    with tempfile.NamedTemporaryFile(prefix="scvs-", suffix=".csv", delete=False) as tmp:
+        path = tmp.name
+    try:
+        result = subprocess.run(
+            [
+                "curl", "--location", "--fail", "--silent", "--show-error",
+                "--http1.1", "--tlsv1.2", "--retry", "3",
+                "--retry-all-errors", "--connect-timeout", "20",
+                "--max-time", "240", "--user-agent", USER_AGENT,
+                "--output", path, url,
+            ],
+            capture_output=True, text=True, timeout=260,
+        )
+        if result.returncode == 0 and os.path.getsize(path) > 0:
+            with open(path, "r", encoding="utf-8-sig", errors="replace", newline="") as f:
+                return f.read()
+        print(f"curl no pudo descargar la fuente ({result.stderr.strip() or result.returncode}); probando urllib.", flush=True)
+    finally:
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=90) as response:
         return response.read().decode("utf-8-sig", errors="replace")
