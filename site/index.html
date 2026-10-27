@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5c400">
+<title>Adsgency Prospecta</title>
+<style>
+:root{--ink:#171717;--muted:#686868;--line:#e7e7e7;--paper:#f6f6f4;--yellow:#f5c400;--white:#fff;--green:#1d7445}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:650}.primary{background:var(--yellow);color:#161616}.secondary{background:#fff;border:1px solid var(--line)}.wrap{max-width:1240px;margin:auto;padding:24px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;background:var(--yellow);border-radius:13px;display:grid;place-items:center;font-weight:900;font-size:20px}.brand h1{font-size:20px;line-height:1.15;margin:0}.brand p{color:var(--muted);margin:4px 0 0;font-size:12px}.private{font-size:12px;border:1px solid #d7d7d7;background:#fff;padding:7px 10px;border-radius:30px}
+.hero{background:#191919;color:#fff;border-radius:20px;padding:28px;margin-bottom:20px;display:flex;justify-content:space-between;gap:24px;align-items:center}.hero h2{font-size:clamp(24px,3vw,36px);line-height:1.1;margin:0 0 10px;max-width:600px;letter-spacing:-.8px}.hero p{color:#c9c9c9;margin:0;max-width:620px}.hero .hero-tag{background:var(--yellow);color:#171717;border-radius:10px;padding:12px 14px;font-weight:750;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.stat span{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:26px;letter-spacing:-.5px;margin-top:4px}.stat small{color:var(--muted)}
+.layout{display:grid;grid-template-columns:310px minmax(0,1fr);gap:18px}.panel h3{margin:0 0 4px;font-size:16px}.sub{color:var(--muted);font-size:12px;margin:0 0 18px}.field{display:block;margin-bottom:14px}.field span{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.field input,.field select{width:100%;border:1px solid #dedede;border-radius:9px;padding:10px;background:#fff;color:var(--ink)}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.notice{margin-top:16px;border-radius:12px;background:#fff8d9;border:1px solid #f2df88;padding:12px;font-size:12px;color:#514300}
+.tabletop{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.tabletop h3{margin:0}.tabletop p{margin:4px 0 0;color:var(--muted);font-size:12px}.pill{display:inline-block;background:#f0f0f0;border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:680px;font-size:13px}th,td{text-align:left;padding:12px;border-bottom:1px solid #eee;vertical-align:top}th{background:#fafafa;color:#666;font-size:11px;text-transform:uppercase;letter-spacing:.04em}tbody tr:last-child td{border-bottom:0}.company{font-weight:750}.muted{color:var(--muted);font-size:12px}.score{font-weight:800}.empty{padding:36px 18px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--ink);margin-bottom:6px}.footer{color:#777;font-size:11px;text-align:center;padding:24px 0 10px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{align-items:flex-start;flex-direction:column}.hero .hero-tag{white-space:normal}}
+@media(max-width:520px){.wrap{padding:14px}.private{display:none}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:22px}.hero{padding:22px}.tabletop{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><div class="mark">A</div><div><h1>Adsgency Prospecta</h1><p>Inteligencia comercial · Ecuador</p></div></div>
+  <div class="private">● Proyecto privado · Piloto</div>
+</header>
+<section class="hero">
+  <div><h2>Encuentra empresas que podrían crecer con Adsgency.</h2><p>Organiza prospectos, identifica oportunidades digitales y prepara una lista priorizada para revisión comercial.</p></div>
+  <div class="hero-tag">PILOTO · 30–50 EMPRESAS</div>
+</section>
+<section class="stats">
+  <div class="stat"><span>Prospectos cargados</span><strong id="statTotal">0</strong><small>En esta sesión</small></div>
+  <div class="stat"><span>Prioridad alta</span><strong id="statHigh">0</strong><small>75 puntos o más</small></div>
+  <div class="stat"><span>Con sitio web</span><strong id="statWeb">0</strong><small>URL disponible</small></div>
+  <div class="stat"><span>Sin revisar</span><strong id="statReview">0</strong><small>Pendientes de revisión</small></div>
+</section>
+<div class="layout">
+  <aside class="panel">
+    <h3>Importar y filtrar</h3><p class="sub">Carga un CSV exportado desde el proceso de prospección.</p>
+    <label class="field"><span>Archivo CSV</span><input id="fileInput" type="file" accept=".csv,text/csv"></label>
+    <div class="actions"><button class="primary" id="loadSample">Cargar ejemplo</button><button class="secondary" id="clear">Limpiar</button></div>
+    <hr style="border:0;border-top:1px solid #eee;margin:20px 0">
+    <label class="field"><span>Buscar empresa</span><input id="search" placeholder="Nombre, actividad o ciudad"></label>
+    <label class="field"><span>Provincia</span><select id="province"><option value="">Todas las provincias</option></select></label>
+    <label class="field"><span>Servicio potencial</span><select id="service"><option value="">Todos los servicios</option><option>Página web</option><option>Redes sociales</option><option>Publicidad digital</option><option>SEO</option><option>Comercio electrónico</option><option>Por determinar</option></select></label>
+    <label class="field"><span>Prioridad mínima</span><select id="priority"><option value="0">Todas</option><option value="50">50 puntos o más</option><option value="75">75 puntos o más</option></select></label>
+    <div class="actions"><button class="secondary" id="resetFilters">Restablecer filtros</button><button class="primary" id="export">Exportar CSV</button></div>
+    <div class="notice"><strong>Modo de prueba.</strong> Esta interfaz funciona en tu navegador. Todavía no está conectada al motor de búsqueda ni ejecuta Harvey.</div>
+  </aside>
+  <main class="panel">
+    <div class="tabletop"><div><h3>Empresas prospectadas</h3><p id="resultLabel">Carga un CSV o usa los datos de ejemplo para explorar la interfaz.</p></div><span class="pill" id="visibleCount">0 resultados</span></div>
+    <div class="tablewrap"><table><thead><tr><th>Empresa</th><th>Ubicación</th><th>Oportunidad</th><th>Prioridad</th><th>Web</th></tr></thead><tbody id="rows"><tr><td colspan="5"><div class="empty"><strong>Aún no hay prospectos</strong>Cuando importes el primer CSV, las empresas aparecerán aquí.</div></td></tr></tbody></table></div>
+  </main>
+</div>
+<div class="footer">Adsgency Prospecta · Herramienta interna · Revisión humana obligatoria antes de contactar empresas</div>
+</div>
+<script>
+const demo=[
+ {empresa:"Ejemplo · Comercio local",ciudad:"Quito",provincia:"Pichincha",actividad:"Comercio minorista",sitio_web:"",servicio_potencial:"Página web",señal_observada:"Ejemplo ficticio: no se ha encontrado una URL en el conjunto de demostración.",nivel_de_confianza:"Baja",prioridad:78,estado:"Pendiente"},
+ {empresa:"Ejemplo · Restaurante",ciudad:"Cuenca",provincia:"Azuay",actividad:"Restaurantes",sitio_web:"https://example.com",servicio_potencial:"Redes sociales",señal_observada:"Ejemplo ficticio para probar filtros.",nivel_de_confianza:"Baja",prioridad:61,estado:"Pendiente"},
+ {empresa:"Ejemplo · Servicios profesionales",ciudad:"Guayaquil",provincia:"Guayas",actividad:"Servicios profesionales",sitio_web:"https://example.com",servicio_potencial:"Publicidad digital",señal_observada:"Ejemplo ficticio para probar filtros.",nivel_de_confianza:"Baja",prioridad:44,estado:"Pendiente"}
+];
+let data=[];
+const $=id=>document.getElementById(id);
+function parseCSV(text){let rows=[],row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++}else if(c==='"'){quoted=!quoted}else if(c===','&&!quoted){row.push(cell);cell=""}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell);if(row.some(v=>v.trim()))rows.push(row);row=[];cell=""}else cell+=c}row.push(cell);if(row.some(v=>v.trim()))rows.push(row);if(rows.length<2)return[];const heads=rows.shift().map(h=>h.trim().toLowerCase().replace(/\s+/g,"_"));return rows.map(r=>{const o={};heads.forEach((h,i)=>o[h]=(r[i]||"").trim());o.empresa=o.empresa||o.company||o.nombre||o.name||"";o.ciudad=o.ciudad||o.city||"";o.provincia=o.provincia||o.province||"";o.sitio_web=o.sitio_web||o.website||o.web||"";o.actividad=o.actividad||o.industry||o.industria||"";o.servicio_potencial=o.servicio_potencial||o.servicio||o.service||"Por determinar";o.señal_observada=o.señal_observada||o.signal||o.personalization||"";o.prioridad=Number(o.prioridad||o.score||0)||0;o.estado=o.estado||o.status||"Pendiente";return o}).filter(o=>o.empresa)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function refreshProvinces(){const sel=$("province"),v=sel.value,ps=[...new Set(data.map(x=>x.provincia).filter(Boolean))].sort();sel.innerHTML='<option value="">Todas las provincias</option>'+ps.map(p=>'<option>'+esc(p)+'</option>').join("");if(ps.includes(v))sel.value=v}
+function render(){const q=$("search").value.toLowerCase(),p=$("province").value,s=$("service").value,min=Number($("priority").value);const filtered=data.filter(x=>(!q||[x.empresa,x.ciudad,x.provincia,x.actividad].join(" ").toLowerCase().includes(q))&&(!p||x.provincia===p)&&(!s||x.servicio_potencial===s)&&Number(x.prioridad||x.score||0)>=min);$("statTotal").textContent=data.length;$("statHigh").textContent=data.filter(x=>Number(x.prioridad||x.score||0)>=75).length;$("statWeb").textContent=data.filter(x=>x.sitio_web).length;$("statReview").textContent=data.filter(x=>!x.estado||/pendiente|review|new/i.test(x.estado)).length;$("visibleCount").textContent=filtered.length+" resultados";$("resultLabel").textContent="Mostrando "+filtered.length+" de "+data.length+" empresas";$("rows").innerHTML=filtered.length?filtered.map(x=>'<tr><td><div class="company">'+esc(x.empresa)+'</div><div class="muted">'+esc(x.actividad||"Actividad no indicada")+'</div></td><td>'+esc([x.ciudad,x.provincia].filter(Boolean).join(", ")||"No indicada")+'</td><td><div>'+esc(x.servicio_potencial||"Por determinar")+'</div><div class="muted">'+esc(x.señal_observada||"Sin señal documentada")+'</div></td><td><span class="score">'+Number(x.prioridad||x.score||0)+'</span><div class="muted">/ 100</div></td><td>'+(x.sitio_web?'<a href="'+esc(x.sitio_web.startsWith("http")?x.sitio_web:"https://"+x.sitio_web)+'" target="_blank" rel="noopener noreferrer">Abrir web ↗</a>':'<span class="muted">No registrada</span>')+'</td></tr>').join(""):'<tr><td colspan="5"><div class="empty"><strong>Sin resultados</strong>Prueba otros filtros o carga un CSV.</div></td></tr>'}
+$("fileInput").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{const parsed=parseCSV(await f.text());if(!parsed.length){alert("No pude leer empresas. Comprueba que el CSV tenga encabezados y una columna empresa o nombre.");return}data=parsed;refreshProvinces();render()}catch(err){alert("No se pudo leer el archivo CSV.")}});
+$("loadSample").onclick=()=>{data=demo.map(x=>({...x}));refreshProvinces();render()};
+$("clear").onclick=()=>{data=[];$("fileInput").value="";refreshProvinces();render()};
+["search","province","service","priority"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+$("resetFilters").onclick=()=>{$("search").value="";$("province").value="";$("service").value="";$("priority").value="0";render()};
+$("export").onclick=()=>{if(!data.length){alert("Primero carga un CSV o los datos de ejemplo.");return}const keys=[...new Set(data.flatMap(Object.keys))],csv=[keys.join(","),...data.map(o=>keys.map(k=>{const v=String(o[k]??"");return /[",\r\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(","))].join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"}));a.download="adsgency-prospecta.csv";a.click();URL.revokeObjectURL(a.href)};
+</script>
+</body>
+</html>
